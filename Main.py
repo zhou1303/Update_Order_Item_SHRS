@@ -83,7 +83,7 @@ if __name__ == '__main__':
         item_cube = cube_dict[value['Primary Reference']]
 
         # Change weight on item.
-        Post_Data.item_editing(session_requests, csrf, item_info_entry, item_freight_class, item_weight)
+        Post_Data.item_editing(session_requests, csrf, item_info_entry, item_freight_class, item_weight, item_cube)
 
         # Remove files from folder.
         os.remove(weight_dict[value['Primary Reference']][1])
