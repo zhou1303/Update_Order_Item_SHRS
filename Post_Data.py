@@ -50,9 +50,10 @@ def log_event(worksheet, duration):
     worksheet.update_cell(next_row, titles_dict['Duration'], duration)
 
 
-def item_change_weight(session_requests, csrf, item_info_entry, item_freight_class, item_weight):
+def item_editing(session_requests, csrf, item_info_entry, item_freight_class, item_weight, item_cube):
 
-    data_dict_item = Config_Post_Data.config_item_edit(csrf, item_info_entry, item_freight_class, item_weight)
+    data_dict_item = Config_Post_Data.config_item_edit(csrf, item_info_entry, item_freight_class,
+                                                       item_weight, item_cube)
 
     # Request change.
     response = session_requests.post(

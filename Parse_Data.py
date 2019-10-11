@@ -1,4 +1,7 @@
 import Constant
+import os
+import PyPDF2 as ppdf
+import time
 
 
 def __clean_location_name(location_name):
@@ -264,3 +267,34 @@ def get_gl_code(dict_list):
             gl_code = -1
         dict_list[i]['Customer GL Code'] = str(gl_code)
     return dict_list
+
+
+def get_pdf_cube():
+
+    print('Extracting cube data from PDF files...')
+
+    cube_dict = dict()
+    files = os.listdir(Constant.shearers_pdf_path)
+    current_time = time.time() # The timestamp of the current time.
+
+    for file in files:
+        if '.pdf' in file:
+            file = Constant.shearers_pdf_path + file
+            file_ctime = os.path.getctime(file) # The timestamp when the file was created.
+
+            # Only look back PDFs that were created in past 4 days.
+            diff = 60*60*24*5 # sec*min*hour*day
+
+            if current_time - file_ctime < diff:
+                pdf_obj = open(file, 'rb')
+                pdf_read = ppdf.PdfFileReader(pdf_obj)
+                pdf_page0 = pdf_read.getPage(0)
+                pdf_lines = pdf_page0.extractText()
+                pdf_obj.close()
+
+                pri_ref = Constant.re_pattern_pdf_pri_ref.findall(pdf_lines)[0]
+                cube = Constant.re_pattern_pdf_number.findall(pdf_lines)[0]
+
+                cube_dict[pri_ref] = float(cube.replace(',', ''))
+    print('Cube data extracted successfully.')
+    return cube_dict

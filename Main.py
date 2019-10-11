@@ -52,9 +52,11 @@ if __name__ == '__main__':
     Post_Data.add_ref_customer_gl_code_shipment_list(session_requests, csrf, dict_list)
 
 # --------------------------------------------------------------------------------------------------------------
-# Correct item weight.
+# Correct item weight and cube.
 
-    print('Updating item weight in shipments...')
+    print('Updating item weight and cube in shipments...')
+
+    cube_dict = Parse_Data.get_pdf_cube()
 
     for i, value in enumerate(dict_list):
         # Concatenate item list url for this shipment.
@@ -78,9 +80,10 @@ if __name__ == '__main__':
         item_freight_class = item_info_dropdown[0]
 
         item_weight = weight_dict[value['Primary Reference']][0]
+        item_cube = cube_dict[value['Primary Reference']]
 
         # Change weight on item.
-        Post_Data.item_change_weight(session_requests, csrf, item_info_entry, item_freight_class, item_weight)
+        Post_Data.item_editing(session_requests, csrf, item_info_entry, item_freight_class, item_weight)
 
         # Remove files from folder.
         os.remove(weight_dict[value['Primary Reference']][1])

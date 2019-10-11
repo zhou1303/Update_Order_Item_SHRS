@@ -2,6 +2,7 @@ import re
 
 root_path = 'C:\\Users\\Zhou_Charles\\Desktop\\'
 shearers_xml_path = 'T:\\ShearersPDF\\XML\\'
+shearers_pdf_path = 'T:\\ShearersPDF\\archive\\'
 
 login_userid = None
 login_password = None
@@ -51,6 +52,9 @@ re_pattern_all_cols = re.compile('\<td align\=.+?\>(.*?)\<\/td\>\s*'
                                  '\<td align\=.+?\>(.*?)\<\/td\>')
 
 re_pattern_api_key = re.compile("\}\)\(\'([\w\-]{36})\'\)\;")
+
+re_pattern_pdf_number = re.compile('([\d\,]+\.\d{1})')
+re_pattern_pdf_pri_ref = re.compile('Bill To\s*\.+(\d+)[a-zA-Z]+')
 
 
 url_get_shipment_report_format0 = 'https://dsclogistics.mercurygate.net/MercuryGate/shipment/listShipment.jsp?' \

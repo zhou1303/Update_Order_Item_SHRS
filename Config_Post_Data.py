@@ -1,7 +1,7 @@
 import Constant
 
 
-def config_item_edit(csrf, item_info_list, freight_class, weight):
+def config_item_edit(csrf, item_info_list, freight_class, weight, cube):
     data_dict = Constant.data_dict_item.copy()
     data_dict['_csrf'] = csrf
     data_dict['bIsShipUnit'] = item_info_list[0]
@@ -20,7 +20,7 @@ def config_item_edit(csrf, item_info_list, freight_class, weight):
     data_dict['fWidth'] = item_info_list[12]
     data_dict['fHeight'] = item_info_list[13]
     data_dict['fDeliveredWeight'] = item_info_list[14]
-    data_dict['fCube'] = item_info_list[15]
+    data_dict['fCube'] = cube
     data_dict['nStackability'] = item_info_list[-4]
     data_dict['sTrackingNumber'] = item_info_list[-3]
 
