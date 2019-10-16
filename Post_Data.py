@@ -24,7 +24,8 @@ def login_tms():
         Constant.url_tms_login,
         data=login_info,
     )
-
+    # -----------------------------------------------------------------------------------------------------------------
+    # Collect TMS login token for future operations.
     csrf = Constant.re_pattern_csrf.search(response.text).group(1)
 
     print('Login as', Constant.login_userid, '...')
@@ -51,16 +52,17 @@ def log_event(worksheet, duration):
 
 
 def item_editing(session_requests, csrf, item_info_entry, item_freight_class, item_weight, item_cube):
-
+    # -----------------------------------------------------------------------------------------------------------------
+    # Configure POST data and send it to a given URL.
     data_dict_item = Config_Post_Data.config_item_edit(csrf, item_info_entry, item_freight_class,
                                                        item_weight, item_cube)
 
-    # Request change.
     response = session_requests.post(
         url=Constant.url_post_edit_item,
         data=data_dict_item
     )
-
+    # -----------------------------------------------------------------------------------------------------------------
+    # Following is required requests for collecting response from TMS.
     html_script = response.text
     followup_urls = Constant.re_pattern_url_parse.findall(html_script)[0]
     api_key = Constant.re_pattern_api_key.findall(html_script)[0]
